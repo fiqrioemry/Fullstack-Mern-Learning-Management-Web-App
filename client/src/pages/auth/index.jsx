@@ -12,7 +12,8 @@ import { SiSololearn } from "react-icons/si";
 import { Link } from "react-router-dom";
 
 const AuthPage = () => {
-  const { signInFormData, setSignInFormData } = useAuth();
+  const { signInFormData, setSignInFormData, authLoading, handleLoginUser } =
+    useAuth();
 
   const formInputValidation = () => {
     return signInFormData && !signInFormData.email && !signInFormData.password;
@@ -32,18 +33,22 @@ const AuthPage = () => {
       <section className="py-4 h-[88vh] bg-muted flex items-center justify-center">
         <Card>
           <CardHeader>
-            <CardTitle>Sign in to LearnSphere</CardTitle>
+            <CardTitle className="text-center">
+              Sign in to LearnSphere
+            </CardTitle>
             <CardDescription>
               Please enter your account information below
             </CardDescription>
           </CardHeader>
           <CardContent>
             <FormCard
+              buttonTitle={"Sign In"}
+              handleSubmit={handleLoginUser}
               formData={signInFormData}
               setFormData={setSignInFormData}
               formInput={SignInFormInput}
-              isButtonDisabled={!formInputValidation()}
-              isButtonLoading={}
+              isButtonDisabled={formInputValidation()}
+              isButtonLoading={authLoading}
             />
           </CardContent>
         </Card>

@@ -1,4 +1,4 @@
-import axiosInstance from "@/api/axiosInstance";
+import axiosInstance from "@/api";
 
 export async function registerService(formData) {
   const { data } = await axiosInstance.post("/auth/register", {
@@ -11,7 +11,6 @@ export async function registerService(formData) {
 
 export async function loginService(formData) {
   const { data } = await axiosInstance.post("/auth/login", formData);
-
   return data;
 }
 

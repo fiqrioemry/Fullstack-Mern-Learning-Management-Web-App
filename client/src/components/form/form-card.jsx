@@ -14,7 +14,7 @@ const FormCard = ({
 }) => {
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <FormControl
           formData={formData}
           setFormData={setFormData}
