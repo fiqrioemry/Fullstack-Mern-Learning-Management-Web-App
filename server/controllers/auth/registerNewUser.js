@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
 
     // input validation
     if (!userName || !userEmail || !password) {
-      return res.status(400).json({
+      return res.status(400).send({
         success: false,
         message: "All fields are required",
       });
@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(400).json({
+      return res.status(400).send({
         success: false,
         message: "Username or email already exists",
       });
@@ -38,12 +38,12 @@ module.exports = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({
+    res.status(201).send({
       success: true,
       message: "Registration is success!",
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: error.message,
     });

@@ -1,6 +1,6 @@
 import { InitialSignInFormData } from "@/config";
 import { loginService } from "@/services";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(null);
 
@@ -16,13 +16,26 @@ export const AuthProvider = ({ children }) => {
 
   const handleLoginUser = async (e) => {
     e.preventDefault();
-    setAuthLoading(true);
-    setTimeout(() => {
-      alert("Login berhasil dengan data :", signInFormData);
-      setAuthLoading(false);
-    }, 2500);
+
+    const data = await loginService(
+      signInFormData,
+      setAuthLoading,
+      setAuthMessage
+    );
+
+    setUserAuth({
+      authenticate: true,
+      user: data,
+    });
   };
 
+  useEffect(() => {
+    if (authMessage) {
+      alert(authMessage);
+    }
+  }, [authMessage]);
+
+  console.log(authMessage);
   return (
     <AuthContext.Provider
       value={{

@@ -10,14 +10,14 @@ dotenv.config();
 // env configuration
 const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
-const CLIENT_HOST = process.env.CLIENT_URL;
+const CLIENT_URL = process.env.CLIENT_URL;
 
 app.use(express.json());
-
 app.use(
   cors({
-    origin: CLIENT_HOST,
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: CLIENT_URL,
+    credentials: true, // allow client to send cookies
+    methods: ["POST", "PUT", "GET", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );

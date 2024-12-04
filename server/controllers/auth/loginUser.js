@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 
     // input validation
     if (!userEmail || !password) {
-      return res.status(400).json({
+      return res.status(400).send({
         success: false,
         message: "Email and password are required",
       });
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
 
     // email validation
     if (!existUser) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "Email is not registered",
       });
@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
     const validPassword = await bcrypt.compare(password, existUser.password);
     // password validation
     if (!validPassword) {
-      return res.status(401).json({
+      return res.status(401).send({
         success: false,
         message: "Password is incorrect",
       });
@@ -48,7 +48,7 @@ module.exports = async (req, res) => {
     );
 
     // send response with data
-    return res.status(200).json({
+    return res.status(200).send({
       success: true,
       message: "Login successful",
       data: {
@@ -62,7 +62,7 @@ module.exports = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Internal server error",
     });

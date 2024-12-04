@@ -3,15 +3,26 @@ import axiosInstance from "@/api";
 export async function registerService(formData) {
   const { data } = await axiosInstance.post("/auth/register", {
     ...formData,
-    role: "user",
   });
 
   return data;
 }
 
-export async function loginService(formData) {
-  const { data } = await axiosInstance.post("/auth/login", formData);
-  return data;
+export async function loginService(formData, setAuthLoading, setAuthhMessage) {
+  try {
+    setAuthLoading(true);
+    const response = await axiosInstance.post("/api/auth/signin", formData);
+    setAuthhMessage(response.data.message);
+    sessionStorage.setItem(
+      "accessToken",
+      JSON.stringify(response.data.data.accessToken)
+    );
+    return response.data.data.user;
+  } catch (error) {
+    setAuthhMessage(error.response.data.message);
+  } finally {
+    setAuthLoading(false);
+  }
 }
 
 export async function checkAuthService() {
