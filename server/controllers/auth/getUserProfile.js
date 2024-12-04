@@ -7,24 +7,26 @@ module.exports = async (req, res) => {
   try {
     const { userId } = req.user;
 
+    // Check if user existence
     const user = await Users.findById(userId);
 
-    // check user existance * not necessary *
-    if (!req.user || !userId) {
+    if (!user) {
       return res.status(401).send({
         success: false,
-        message: "Unauthorized: Missing user data",
+        message: "User not found",
       });
     }
-    // assign userprofile data
+
+    console.log(user);
+    // Assign user profile data
     const payload = {
-      firstName: user?.firstName || "firstname not defined",
-      lastName: user?.lastName || "lastname not defined",
-      gender: user?.gender || "Gender not specified",
-      birthday: user?.birthday || "Birthday not specified",
+      firstName: user.userProfile.firstName,
+      lastName: user.userProfile.lastName,
+      gender: user.userProfile.gender,
+      birthday: user.userProfile.birthday,
     };
 
-    // send response with data
+    // Send response with the user data
     return res.status(200).send({
       success: true,
       data: payload,

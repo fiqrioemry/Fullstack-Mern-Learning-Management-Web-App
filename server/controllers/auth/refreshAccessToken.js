@@ -1,8 +1,10 @@
+const dotenv = require("dotenv");
+dotenv.config();
+const jwt = require("jsonwebtoken");
 const RefreshToken = require("../../models/RefreshToken");
 
 module.exports = async (req, res) => {
   try {
-    console.log("halooooooooooooooooooooooooooooooooooooooooo", req);
     const { refreshToken } = req.cookies;
 
     // validate token as cookie
@@ -19,7 +21,11 @@ module.exports = async (req, res) => {
     }
 
     // decode data from token
-    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN);
+    const user = jwt.verify(
+      existRefreshToken.refreshToken,
+      process.env.REFRESH_TOKEN
+    );
+    console.log("user user data :", user);
 
     // assign user data
     const payload = {

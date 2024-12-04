@@ -26,20 +26,20 @@ module.exports = async (req, res) => {
       });
     }
 
+    user.userProfile.firstName = firstName;
+    user.userProfile.lastName = lastName;
+    user.userProfile.birthday = birthday;
+    user.userProfile.gender = gender;
+
     // update userprofile data
-    const updatedUser = await user.update({
-      firstName,
-      lastName,
-      birthday,
-      gender,
-    });
+    const updatedUser = await user.save();
 
     // assign userprofile data
     const payload = {
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName,
-      gender: updatedUser.birthday,
-      birthday: updatedUser.gender,
+      firstName: updatedUser.userProfile.firstName,
+      lastName: updatedUser.userProfile.lastName,
+      gender: updatedUser.userProfile.birthday,
+      birthday: updatedUser.userProfile.gender,
     };
 
     // send response with data

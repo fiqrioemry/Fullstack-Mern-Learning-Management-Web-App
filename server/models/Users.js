@@ -6,12 +6,14 @@ const UserSchema = new mongoose.Schema({
   userEmail: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ["user", "instructor"], default: "user" },
-  userProfile: {
-    firstName: String,
-    lastName: String,
-    birthday: Date,
-    gender: { type: String, enum: ["men", "women"] },
-  },
+  userProfile: [
+    {
+      firstName: String,
+      lastName: String,
+      birthday: Date,
+      gender: { type: String, enum: ["men", "women"] },
+    },
+  ],
   subscriptions: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Subscription" },
   ],

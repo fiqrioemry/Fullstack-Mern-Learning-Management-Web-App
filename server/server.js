@@ -2,7 +2,9 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
+const cookies = require("cookie-parser");
 const app = express();
+
 const services = require("./routes");
 
 dotenv.config();
@@ -12,13 +14,14 @@ const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 const CLIENT_URL = process.env.CLIENT_URL;
 
-app.use(express.json());
+app.use(cookies()); // allow read a cookie such refreshtoken
+app.use(express.json()); // allow parsing request body as JSON
 app.use(
   cors({
-    origin: CLIENT_URL,
-    credentials: true, // allow client to send cookies
-    methods: ["POST", "PUT", "GET", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: CLIENT_URL, // restrict only for specified path
+    credentials: true, // allow to send credential
+    methods: ["POST", "PUT", "GET", "DELETE"], // allow only this method
+    allowedHeaders: ["Content-Type", "Authorization"], //allow content such bearer on headers
   })
 );
 
