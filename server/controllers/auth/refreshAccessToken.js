@@ -1,15 +1,43 @@
+const RefreshToken = require("../../models/RefreshToken");
 const Users = require("../../models/Users");
 
 module.exports = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { refreshToken } = req.cookies;
 
-    const refreshToken = await Users.findOne({ _id: userId });
+    // validate token as cookie
+    if (!refreshToken)
+      return res.status(401).send({ message: "Session expired, Please login" });
 
-    if (!refreshToken && refreshToken.expiresAt < Date.now()) {
-      res
-        .status(401)
-        .send({ message: "Session expired, Please login to your account" });
+    // validate token on database
+    const existRefreshToken = await RefreshToken.findOne({ refreshToken });
+
+    if (!existRefreshToken) {
+      res.status(401).send({ message: "Unauthorized Access !!!" });
+    } else if (existRefreshToken.expiresAt < Date.now()) {
+      return res.status(401).send({ message: "Session expired, Please login" });
     }
-  } catch (error) {}
+
+    // decode data from token
+    const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN);
+
+    // assign user data
+    const payload = {
+      userId: user.userId,
+      userName: user.userName,
+      userEmail: user.userEmail,
+      userRole: user.userRole,
+    };
+
+    // generate new accesstoken
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN, {
+      expiresIn: "15m",
+    });
+
+    res.status(200).send({ success: true, data: accessToken });
+  } catch (error) {
+    return res
+      .status(500)
+      .send({ success: false, message: "Internal server error " });
+  }
 };

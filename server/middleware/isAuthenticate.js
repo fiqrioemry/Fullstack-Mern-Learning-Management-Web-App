@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
         message: "Session expired, Please Login",
       });
 
-    //   decode and send as req
+    //   decode and send as request
     const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
 
     req.user = payload;
