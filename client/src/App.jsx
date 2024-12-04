@@ -1,4 +1,4 @@
-import HomePage from "./pages/home";
+import HomePage from "./pages/home/index";
 import AuthValidation from "@/middleware";
 import MainLayout from "./components/layout";
 import { Route, Routes } from "react-router-dom";
@@ -10,10 +10,7 @@ function App() {
     <Routes>
       <Route path="/auth/sign-in" element={<SignInPage />} />
       <Route path="/auth/sign-up" element={<SignUpPage />} />
-      <Route path="/" element={<AuthValidation element={<MainLayout />} />}>
-        <Route path="" element={<HomePage />} />
-        <Route path="/home" element={<HomePage />} />
-      </Route>
+      <Route path="/home" element={<HomePage />} />
     </Routes>
   );
 }

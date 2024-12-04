@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthProvider";
 import { useStudent } from "@/context/StudentProvider";
-import {
-  checkCoursePurchaseInfoService,
-  fetchStudentViewCourseListService,
-} from "@/services";
+// import {
+//   checkCoursePurchaseInfoService,
+//   fetchStudentViewCourseListService,
+// } from "@/services";
 
 function HomePage() {
+  console.log("PRINT LOG INFO:");
   const { studentViewCoursesList, setStudentViewCoursesList } = useStudent();
   const { userAuth } = useAuth();
   const navigate = useNavigate();
@@ -26,29 +27,29 @@ function HomePage() {
     navigate("/courses");
   }
 
-  async function fetchAllStudentViewCourses() {
-    const response = await fetchStudentViewCourseListService();
-    if (response?.success) setStudentViewCoursesList(response?.data);
-  }
+  //   async function fetchAllStudentViewCourses() {
+  //     const response = await fetchStudentViewCourseListService();
+  //     if (response?.success) setStudentViewCoursesList(response?.data);
+  //   }
 
-  async function handleCourseNavigate(getCurrentCourseId) {
-    const response = await checkCoursePurchaseInfoService(
-      getCurrentCourseId,
-      userAuth?.userId
-    );
+  //   async function handleCourseNavigate(getCurrentCourseId) {
+  //     const response = await checkCoursePurchaseInfoService(
+  //       getCurrentCourseId,
+  //       userAuth?.userId
+  //     );
 
-    if (response?.success) {
-      if (response?.data) {
-        navigate(`/course-progress/${getCurrentCourseId}`);
-      } else {
-        navigate(`/course/details/${getCurrentCourseId}`);
-      }
-    }
-  }
+  //     if (response?.success) {
+  //       if (response?.data) {
+  //         navigate(`/course-progress/${getCurrentCourseId}`);
+  //       } else {
+  //         navigate(`/course/details/${getCurrentCourseId}`);
+  //       }
+  //     }
+  //   }
 
-  useEffect(() => {
-    fetchAllStudentViewCourses();
-  }, []);
+  //   useEffect(() => {
+  //     fetchAllStudentViewCourses();
+  //   }, []);
 
   return (
     <div className="min-h-screen bg-white">
@@ -85,7 +86,7 @@ function HomePage() {
       </section>
       <section className="py-12 px-4 lg:px-8">
         <h2 className="text-2xl font-bold mb-6">Featured Courses</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
             studentViewCoursesList.map((courseItem, index) => (
               <div
@@ -113,7 +114,7 @@ function HomePage() {
           ) : (
             <h1>No Courses Found</h1>
           )}
-        </div>
+        </div> */}
       </section>
     </div>
   );

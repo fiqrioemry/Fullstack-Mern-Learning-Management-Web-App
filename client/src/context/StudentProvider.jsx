@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 export const StudentContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
-export default function StudentProvider({ children }) {
+export const StudentProvider = ({ children }) => {
   const [studentViewCoursesList, setStudentViewCoursesList] = useState([]);
   const [loadingState, setLoadingState] = useState(true);
   const [studentViewCourseDetails, setStudentViewCourseDetails] =
@@ -34,7 +34,7 @@ export default function StudentProvider({ children }) {
       {children}
     </StudentContext.Provider>
   );
-}
+};
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useStudent = () => {

@@ -2,7 +2,7 @@
 export const SignInFormInput = [
   {
     name: "userEmail",
-    label: "User Email",
+    label: "Email",
     placeholder: "Enter your email",
     type: "email",
     componentType: "input",
@@ -20,15 +20,15 @@ export const SignInFormInput = [
 export const signUpFormInput = [
   {
     name: "userName",
-    label: "User Name",
-    placeholder: "Enter your user name",
+    label: "Username",
+    placeholder: "Enter your username",
     type: "text",
     componentType: "input",
   },
   {
     name: "userEmail",
-    label: "User Email",
-    placeholder: "Enter your user email",
+    label: "Email",
+    placeholder: "Enter your email",
     type: "email",
     componentType: "input",
   },
