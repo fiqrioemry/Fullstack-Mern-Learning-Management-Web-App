@@ -1,8 +1,9 @@
+import { Fragment } from "react";
 import { useAuth } from "@/context/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-function AuthValidation({ children }) {
+function AuthValidation({ element }) {
   const location = useLocation();
   const token = sessionStorage.getItem("accessToken");
   const { authUser } = useAuth();
@@ -27,7 +28,6 @@ function AuthValidation({ children }) {
   ) {
     return <Navigate to="/instructor" />;
   }
-
-  return <>{children}</>;
+  return <Fragment>{element}</Fragment>;
 }
 export default AuthValidation;

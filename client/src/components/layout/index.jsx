@@ -1,7 +1,7 @@
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 
-function PageLayout() {
+function MainLayout() {
   return (
     <div>
       <Header /> :
@@ -10,4 +10,4 @@ function PageLayout() {
   );
 }
 
-export default PageLayout;
+export default MainLayout;

@@ -1,5 +1,4 @@
-// authentication page
-// sign in form information
+//signin input data
 export const SignInFormInput = [
   {
     name: "userEmail",
@@ -17,9 +16,49 @@ export const SignInFormInput = [
   },
 ];
 
-export const InitialSignInFormData = {
+//signup input data
+export const signUpFormInput = [
+  {
+    name: "userName",
+    label: "User Name",
+    placeholder: "Enter your user name",
+    type: "text",
+    componentType: "input",
+  },
+  {
+    name: "userEmail",
+    label: "User Email",
+    placeholder: "Enter your user email",
+    type: "email",
+    componentType: "input",
+  },
+  {
+    name: "password",
+    label: "Password",
+    placeholder: "Enter your password",
+    type: "password",
+    componentType: "input",
+  },
+];
+
+// signup form data
+export const initialSignUpFormData = {
+  userName: "",
   userEmail: "",
   password: "",
+};
+
+// signin form data
+export const initialSignInFormData = {
+  userEmail: "",
+  password: "",
+};
+
+// auth notification process
+export const initialAuthNotification = {
+  loading: false,
+  message: "",
+  status: null,
 };
 
 export const courseLevelOptions = [
@@ -39,6 +78,19 @@ export const courseCategories = [
   { id: "mobile-development", label: "Mobile Development" },
   { id: "game-development", label: "Game Development" },
   { id: "software-engineering", label: "Software Engineering" },
+];
+
+export const languageOptions = [
+  { id: "english", label: "English" },
+  { id: "spanish", label: "Spanish" },
+  { id: "french", label: "French" },
+  { id: "german", label: "German" },
+  { id: "chinese", label: "Chinese" },
+  { id: "japanese", label: "Japanese" },
+  { id: "korean", label: "Korean" },
+  { id: "portuguese", label: "Portuguese" },
+  { id: "arabic", label: "Arabic" },
+  { id: "russian", label: "Russian" },
 ];
 
 export const courseLandingPageFormControls = [

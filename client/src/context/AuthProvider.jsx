@@ -1,27 +1,28 @@
-import { InitialSignInFormData } from "@/config";
-import { loginService } from "@/services";
+import {
+  initialAuthNotification,
+  initialSignInFormData,
+  initialSignUpFormData,
+} from "@/config";
+import { signInUser, signUpUser } from "@/services";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(null);
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-  const [signInFormData, setSignInFormData] = useState(InitialSignInFormData);
+  const [authNotif, setAuthNotif] = useState(initialAuthNotification);
+  const [signUpFormData, setSignUpFormData] = useState(initialSignUpFormData);
+  const [signInFormData, setSignInFormData] = useState(initialSignInFormData);
+
   const [userAuth, setUserAuth] = useState({
     authenticate: false,
     user: null,
   });
-  const [authLoading, setAuthLoading] = useState(false);
-  const [authMessage, setAuthMessage] = useState(null);
 
-  const handleLoginUser = async (e) => {
+  const handleSignInUser = async (e) => {
     e.preventDefault();
 
-    const data = await loginService(
-      signInFormData,
-      setAuthLoading,
-      setAuthMessage
-    );
+    const data = await signInUser(signInFormData, setAuthNotif);
 
     setUserAuth({
       authenticate: true,
@@ -29,22 +30,31 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  useEffect(() => {
-    if (authMessage) {
-      alert(authMessage);
-    }
-  }, [authMessage]);
+  const handleSignUpUser = async (e) => {
+    e.preventDefault();
 
-  console.log(authMessage);
+    await signUpUser(signUpFormData, setAuthNotif);
+  };
+
+  useEffect(() => {
+    if (authNotif.status === "success") {
+      alert(authNotif.message);
+    } else if (authNotif.status === "failed") {
+      alert(authNotif.message);
+    }
+  }, [authNotif]);
+
   return (
     <AuthContext.Provider
       value={{
         userAuth,
+        authNotif,
+        signUpFormData,
+        setSignUpFormData,
         signInFormData,
         setSignInFormData,
-        handleLoginUser,
-        authLoading,
-        authMessage,
+        handleSignInUser,
+        handleSignUpUser,
       }}
     >
       {children}
