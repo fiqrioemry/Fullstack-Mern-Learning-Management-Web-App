@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthProvider";
 import { useStudent } from "@/context/StudentProvider";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Image } from "lucide-react";
 // import {
 //   checkCoursePurchaseInfoService,
 //   fetchStudentViewCourseListService,
@@ -72,15 +74,20 @@ function HomePage() {
       <section className="py-8 px-4 lg:px-8 bg-gray-100">
         <h2 className="text-2xl font-bold mb-6">Course Categories</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {courseCategories.map((categoryItem) => (
-            <Button
-              className="justify-start"
-              variant="outline"
-              key={categoryItem.id}
-              onClick={() => handleNavigateToCoursesPage(categoryItem.id)}
-            >
-              {categoryItem.label}
-            </Button>
+          {courseCategories.map((categoryItem, index) => (
+            <Card key={index} className="flex flex-row">
+              <div className="rounded-lg overflow-hidden">
+                <img
+                  className="w-[125px] h-[125px] object-cover"
+                  src="https://cms.purwadhika.com/uploads/jc_landing_cards_dm_d72deaa057.jpg"
+                  alt="course"
+                />
+              </div>
+              <div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
+                modi fugiat id distinctio consectetur laboriosam?
+              </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -121,3 +128,13 @@ function HomePage() {
 }
 
 export default HomePage;
+{
+  /* <Button
+              className="justify-start"
+              variant="outline"
+              key={categoryItem.id}
+              onClick={() => handleNavigateToCoursesPage(categoryItem.id)}
+            >
+              {categoryItem.label}
+            </Button> */
+}

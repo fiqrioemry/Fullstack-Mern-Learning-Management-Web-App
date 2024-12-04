@@ -14,7 +14,7 @@ function AuthValidation({ element }) {
 
   if (
     token &&
-    authUser.user?.role !== "instructor" &&
+    authUser?.userRole !== "instructor" &&
     (location.pathname.includes("instructor") ||
       location.pathname.includes("/auth"))
   ) {
@@ -23,7 +23,7 @@ function AuthValidation({ element }) {
 
   if (
     token &&
-    authUser.user.role === "instructor" &&
+    authUser?.userRole === "instructor" &&
     !location.pathname.includes("instructor")
   ) {
     return <Navigate to="/instructor" />;
