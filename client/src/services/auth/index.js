@@ -45,3 +45,21 @@ export async function signInUser(formData, setAuthNotif) {
     setAuthNotif(initialAuthNotification);
   }
 }
+
+export async function signOutUser(setAuthNotif) {
+  try {
+    // set loading process
+    setAuthNotif.loading(true);
+
+    const response = await axiosInstance.delete("/api/auth/signout");
+
+    // set success message
+    setAuthNotif.message(response.data.message);
+
+    // remove authorization token
+    sessionStorage.removeItem("accessToken");
+  } finally {
+    // reset notification
+    setAuthNotif(initialAuthNotification);
+  }
+}

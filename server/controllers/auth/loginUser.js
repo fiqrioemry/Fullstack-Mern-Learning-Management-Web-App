@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const Users = require("../../models/Users");
+const { Users } = require("../../models/Users");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const RefreshToken = require("../../models/RefreshToken");
@@ -7,6 +7,7 @@ dotenv.config();
 
 module.exports = async (req, res) => {
   try {
+    console.log("HALOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     const { userEmail, password } = req.body;
 
     // input validation

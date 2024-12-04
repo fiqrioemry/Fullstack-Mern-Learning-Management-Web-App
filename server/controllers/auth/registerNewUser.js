@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const Users = require("../../models/Users");
+const { Users } = require("../../models/Users");
 
 module.exports = async (req, res) => {
   try {

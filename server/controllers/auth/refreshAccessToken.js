@@ -1,8 +1,8 @@
 const RefreshToken = require("../../models/RefreshToken");
-const Users = require("../../models/Users");
 
 module.exports = async (req, res) => {
   try {
+    console.log("halooooooooooooooooooooooooooooooooooooooooo", req);
     const { refreshToken } = req.cookies;
 
     // validate token as cookie
