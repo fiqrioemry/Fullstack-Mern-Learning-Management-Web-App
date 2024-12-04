@@ -1,8 +1,55 @@
+import { useEffect } from "react";
 import { courseCategories } from "@/config";
 import banner from "@/assets/banner-img.png";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthProvider";
+import { useStudent } from "@/context/StudentProvider";
+import {
+  checkCoursePurchaseInfoService,
+  fetchStudentViewCourseListService,
+} from "@/services";
 
 function HomePage() {
+  const { studentViewCoursesList, setStudentViewCoursesList } = useStudent();
+  const { userAuth } = useAuth();
+  const navigate = useNavigate();
+
+  function handleNavigateToCoursesPage(getCurrentId) {
+    sessionStorage.removeItem("filters");
+    const currentFilter = {
+      category: [getCurrentId],
+    };
+
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+
+    navigate("/courses");
+  }
+
+  async function fetchAllStudentViewCourses() {
+    const response = await fetchStudentViewCourseListService();
+    if (response?.success) setStudentViewCoursesList(response?.data);
+  }
+
+  async function handleCourseNavigate(getCurrentCourseId) {
+    const response = await checkCoursePurchaseInfoService(
+      getCurrentCourseId,
+      userAuth?.userId
+    );
+
+    if (response?.success) {
+      if (response?.data) {
+        navigate(`/course-progress/${getCurrentCourseId}`);
+      } else {
+        navigate(`/course/details/${getCurrentCourseId}`);
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchAllStudentViewCourses();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <section className="flex flex-col lg:flex-row items-center justify-between py-8 px-4 lg:px-8">
@@ -29,6 +76,7 @@ function HomePage() {
               className="justify-start"
               variant="outline"
               key={categoryItem.id}
+              onClick={() => handleNavigateToCoursesPage(categoryItem.id)}
             >
               {categoryItem.label}
             </Button>
@@ -36,13 +84,14 @@ function HomePage() {
         </div>
       </section>
       <section className="py-12 px-4 lg:px-8">
-        <h2 className="text-2xl font-bold mb-6">Featured COourses</h2>
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h2 className="text-2xl font-bold mb-6">Featured Courses</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
-            studentViewCoursesList.map((courseItem) => (
+            studentViewCoursesList.map((courseItem, index) => (
               <div
                 onClick={() => handleCourseNavigate(courseItem?._id)}
                 className="border rounded-lg overflow-hidden shadow cursor-pointer"
+                key={index}
               >
                 <img
                   src={courseItem?.image}
@@ -64,7 +113,7 @@ function HomePage() {
           ) : (
             <h1>No Courses Found</h1>
           )}
-        </div> */}
+        </div>
       </section>
     </div>
   );
