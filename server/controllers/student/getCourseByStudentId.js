@@ -12,12 +12,10 @@ module.exports = async function getCoursesByStudentId(req, res) {
       data: studentBoughtCourses.courses,
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).send({
       success: false,
-      message: "Some error occured!",
+      message: "Internal server error",
       error: error.message,
     });
   }
 };
-
-module.exports = { getCoursesByStudentId };
