@@ -1,10 +1,10 @@
-const addNewCourses = require("./addNewCourses");
+const addNewCourse = require("./addNewCourse");
 const getAllCourses = require("./getAllCourses");
 const getCourseDetailsById = require("./getCourseDetailsById");
 const updateCourseById = require("./updateCourseById");
 
 module.exports = {
-  addNewCourses,
+  addNewCourse,
   getAllCourses,
   getCourseDetailsById,
   updateCourseById,

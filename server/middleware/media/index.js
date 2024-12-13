@@ -21,13 +21,11 @@ function fileFilter(req, file, cb) {
   cb(`inly file with format ${fileTypes} are allowed`);
 }
 
-function upload() {
-  multer({
-    storage: storage,
-    limit: { fileSize: 100000000 }, // maks 100mb
-    fileFilter: fileFilter,
-  });
-}
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 100000000 }, // Max file size: 100 MB
+  fileFilter: fileFilter,
+});
 
 function multerErrorHandler(error, req, res, next) {
   if (error instanceof multer.MulterError) {
