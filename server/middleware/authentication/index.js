@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
-module.exports = async (req, res, next) => {
+async function isAuthenticate(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader.split(" ").pop();
 
@@ -20,4 +20,6 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     res.status(500).send({ success: false, message: error.message });
   }
-};
+}
+
+module.exports = isAuthenticate;
