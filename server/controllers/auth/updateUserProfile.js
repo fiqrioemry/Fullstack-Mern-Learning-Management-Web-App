@@ -1,6 +1,5 @@
 const dotenv = require("dotenv");
-const { Users } = require("../../models/Users");
-
+const { User } = require("../../models/User");
 dotenv.config();
 
 module.exports = async (req, res) => {
@@ -17,10 +16,10 @@ module.exports = async (req, res) => {
       });
     }
     // check user existance
-    const user = await Users.findById(userId);
+    const user = await User.findById(userId);
 
     if (!req.user || !userId) {
-      return res.status(401).send({
+      return res.status(403).send({
         success: false,
         message: "Unauthorized: Missing user data",
       });

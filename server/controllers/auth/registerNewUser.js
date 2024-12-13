@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { Users } = require("../../models/Users");
+const { User } = require("../../models/User");
 
 module.exports = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
     }
 
     // email and username validation
-    const existingUser = await Users.findOne({
+    const existingUser = await User.findOne({
       $or: [{ userEmail }, { userName }],
     });
 
@@ -26,13 +26,14 @@ module.exports = async (req, res) => {
     }
 
     // encrypt password
-    const hashPassword = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
 
     // save new user information
-    const newUser = new Users({
+    const newUser = new User({
       userName,
       userEmail,
-      role: "user",
+      role: "student",
       password: hashPassword,
     });
 

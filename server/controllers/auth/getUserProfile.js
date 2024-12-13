@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-const { Users } = require("../../models/Users");
+const { User } = require("../../models/User");
 
 dotenv.config();
 
@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     const { userId } = req.user;
 
     // Check if user existence
-    const user = await Users.findById(userId);
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(401).send({
@@ -17,7 +17,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    console.log(user);
     // Assign user profile data
     const payload = {
       firstName: user.userProfile.firstName,

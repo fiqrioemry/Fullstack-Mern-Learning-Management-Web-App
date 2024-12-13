@@ -1,24 +1,15 @@
-const bcrypt = require("bcrypt");
-const { Users } = require("../../models/Users");
-const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { User } = require("../../models/User");
 const RefreshToken = require("../../models/RefreshToken");
 dotenv.config();
 
 module.exports = async (req, res) => {
   try {
-    console.log("HALOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     const { userEmail, password } = req.body;
 
-    // input validation
-    if (!userEmail || !password) {
-      return res.status(400).send({
-        success: false,
-        message: "Email and password are required",
-      });
-    }
-
-    const existUser = await Users.findOne({ userEmail });
+    const existUser = await User.findOne({ userEmail });
 
     // email validation
     if (!existUser) {
@@ -46,7 +37,7 @@ module.exports = async (req, res) => {
         userRole: existUser.role,
       },
       process.env.ACCESS_TOKEN,
-      { expiresIn: "30m" }
+      { expiresIn: "1h" }
     );
 
     // generate refresh token
