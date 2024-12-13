@@ -3,7 +3,7 @@ const { User } = require("../../models/User");
 
 dotenv.config();
 
-module.exports = async function (req, res) {
+module.exports = async function getUserProfile(req, res) {
   try {
     const { userId } = req.user;
 
