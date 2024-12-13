@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../../models/User");
-const RefreshToken = require("../../models/RefreshToken");
+const Token = require("../../models/Token");
 dotenv.config();
 
 module.exports = async (req, res) => {
@@ -53,13 +53,13 @@ module.exports = async (req, res) => {
     );
 
     // Validate existing token
-    const existRefreshToken = await RefreshToken.findOne({
+    const existRefreshToken = await Token.findOne({
       userId: existUser._id,
     });
 
     // create or update existing token
     if (!existRefreshToken) {
-      await RefreshToken.create({
+      await Token.create({
         userId: existUser._id,
         refreshToken,
         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),

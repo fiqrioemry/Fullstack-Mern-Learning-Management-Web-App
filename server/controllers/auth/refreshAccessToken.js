@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
-const RefreshToken = require("../../models/RefreshToken");
+const Token = require("../../models/Token");
 dotenv.config();
 
 module.exports = async (req, res) => {
@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
       return res.status(401).send({ message: "Session expired, Please login" });
 
     // validate token on database
-    const existRefreshToken = await RefreshToken.findOne({ refreshToken });
+    const existRefreshToken = await Token.findOne({ refreshToken });
 
     if (!existRefreshToken) {
       res.status(403).send({ message: "Access Forbidden !!!" });
