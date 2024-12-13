@@ -13,6 +13,7 @@ async function uploadMediaToCloudinary(filePath) {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
       resource_type: "auto",
+      folder: "learning_management_system",
     });
 
     return result;

@@ -1,42 +1,52 @@
 const multer = require("multer");
+const path = require("path");
 const {
   deleteMediaFromCloudinary,
   uploadMediaToCloudinary,
 } = require("../../utils/cloudinary");
 
-function storage() {
-  multer.diskStorage({
-    destination: "uploads/", // local folder name
-  });
-}
-
-function fileFilter(req, file, cb) {
-  const fileTypes = /mp4|mkv|avi|mov/;
-  const mimeType = fileTypes.test(file.mimetype);
-  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-
-  if (mimeType && extname) {
-    return cb(null, true);
-  }
-  cb(`inly file with format ${fileTypes} are allowed`);
-}
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 100000000 }, // Max file size: 100 MB
-  fileFilter: fileFilter,
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
 });
+
+const fileFilter = () => {
+  return (req, file, cb) => {
+    const fileTypes = /mp4|mkv|avi|mov/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+
+    if (mimeType && extname) {
+      return cb(null, true);
+    }
+    cb(`inly file with format ${fileTypes} are allowed`);
+  };
+};
+
+const upload = () => {
+  return multer({
+    storage: storage,
+    limits: { fileSize: 100000000 },
+    fileFilter: fileFilter(),
+  });
+};
 
 function multerErrorHandler(error, req, res, next) {
   if (error instanceof multer.MulterError) {
-    res.status(400).send({ success: false, message: error.message });
+    if (error.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({
+        message: `File size is too large. Max allowed size is ${req.body.maxSize} bytes.`,
+      });
+    }
+    return res.status(400).json({ message: error.message });
   } else if (error) {
-    res.status(500).send({ success: false, message: error.message });
-  } else {
-    next();
+    return res.status(400).json({ message: error.message });
   }
+  next();
 }
-
 // single file upload
 async function uploadSingleVideo(req, res) {
   try {

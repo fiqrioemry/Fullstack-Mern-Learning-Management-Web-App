@@ -3,15 +3,9 @@ const Course = require("../../models/Course");
 module.exports = async function updateCourseById(req, res) {
   try {
     const { id } = req.params;
-    const updatedCourseData = req.body;
+    const courseDetails = await Course.findById(id);
 
-    const updatedCourse = await Course.findByIdAndUpdate(
-      id,
-      updatedCourseData,
-      { new: true }
-    );
-
-    if (!updatedCourse) {
+    if (!courseDetails) {
       return res.status(404).json({
         success: false,
         message: "Course not found!",
@@ -20,13 +14,12 @@ module.exports = async function updateCourseById(req, res) {
 
     res.status(200).json({
       success: true,
-      message: "Course updated successfully",
-      data: updatedCourse,
+      data: courseDetails,
     });
-  } catch (e) {
-    return res.status(500).send({
+  } catch (error) {
+    res.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: "Some error occured!",
       error: error.message,
     });
   }

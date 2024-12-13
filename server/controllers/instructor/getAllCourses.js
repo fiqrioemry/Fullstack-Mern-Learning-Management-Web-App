@@ -2,7 +2,7 @@ const Course = require("../../models/Course");
 
 module.exports = async function getAllCourses(req, res) {
   try {
-    const coursesList = await Course.find({});
+    const coursesList = await Course.find();
 
     res.status(200).json({
       success: true,
