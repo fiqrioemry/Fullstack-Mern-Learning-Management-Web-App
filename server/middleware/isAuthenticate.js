@@ -1,29 +1,23 @@
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 module.exports = async (req, res, next) => {
-  // get token from header
   const authHeader = req.headers.authorization;
+  const token = authHeader.split(" ").pop();
 
-  const token = authHeader && authHeader.split(" ").pop();
-
-  //   validate token
   try {
     if (!token)
-      return res.status(401).json({
-        success: false,
-        message: "Session expired, Please Login",
-      });
+      return res
+        .status(401)
+        .send({ success: false, message: "Session expired, please login" });
 
-    //   decode and send as request
-    const payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+    const decode = jwt.verify(token, process.env.REFRESH_TOKEN);
 
-    req.user = payload;
+    req.user = decode;
 
     next();
   } catch (error) {
-    res.status(401).json({
-      success: false,
-      message: "Unauthorized Access !!!",
-    });
+    res.status(500).send({ success: false, message: error.message });
   }
 };
