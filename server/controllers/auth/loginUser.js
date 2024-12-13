@@ -5,7 +5,7 @@ const { User } = require("../../models/User");
 const Token = require("../../models/Token");
 dotenv.config();
 
-module.exports = async (req, res) => {
+module.exports = async function (req, res) {
   try {
     const { userEmail, password } = req.body;
 

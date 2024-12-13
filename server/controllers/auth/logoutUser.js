@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
-module.exports = async (req, res) => {
+module.exports = async function (req, res) {
   delete req.headers.authorization;
 
   res.clearCookie("refreshToken");

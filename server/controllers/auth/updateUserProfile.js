@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const { User } = require("../../models/User");
 dotenv.config();
 
-module.exports = async (req, res) => {
+module.exports = async function (req, res) {
   try {
     const { userId } = req.user;
 

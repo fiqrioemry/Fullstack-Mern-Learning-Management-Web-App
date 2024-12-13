@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const Token = require("../../models/Token");
 dotenv.config();
 
-module.exports = async (req, res) => {
+module.exports = async function (req, res) {
   try {
     const { refreshToken } = req.cookies;
 
