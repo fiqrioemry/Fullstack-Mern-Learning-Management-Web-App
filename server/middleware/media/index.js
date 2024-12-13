@@ -1,4 +1,8 @@
 const multer = require("multer");
+const {
+  deleteMediaFromCloudinary,
+  uploadMediaToCloudinary,
+} = require("../../utils/cloudinary");
 
 function storage() {
   multer.diskStorage({
@@ -35,4 +39,78 @@ function multerErrorHandler(error, req, res, next) {
   }
 }
 
-module.exports = { upload, multerErrorHandler };
+// single file upload
+async function uploadSingleVideo(req, res) {
+  try {
+    const file = req.file;
+    const result = await uploadMediaToCloudinary(file.path);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error !!!",
+      error: error.message,
+    });
+  }
+}
+
+// multi file upload
+async function uploadMultiVideos(req, res) {
+  try {
+    const files = req.files;
+    const uploadPromises = files.map((file) =>
+      uploadMediaToCloudinary(file.path)
+    );
+
+    const results = await Promise.all(uploadPromises);
+
+    res.status(200).json({
+      success: true,
+      data: results,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Iternal Server Error",
+      error: error.message,
+    });
+  }
+}
+
+// delete file
+async function deleteVideo(req, res) {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Assest Id is required",
+      });
+    }
+
+    await deleteMediaFromCloudinary(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Assest deleted successfully from cloudinary",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Iternal Server Error",
+      error: error.message,
+    });
+  }
+}
+
+module.exports = {
+  upload,
+  multerErrorHandler,
+  uploadSingleVideo,
+  uploadMultiVideos,
+  deleteVideo,
+};

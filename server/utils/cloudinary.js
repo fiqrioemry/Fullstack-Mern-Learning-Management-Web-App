@@ -9,15 +9,26 @@ cloudinary.config({
   secure: true,
 });
 
-async function uploadFileToCloudinary(filepath) {
+async function uploadMediaToCloudinary(filePath) {
   try {
-    const result = await cloudinary.uploader.upload(filepath, {
-      resource_type: "video",
+    const result = await cloudinary.uploader.upload(filePath, {
+      resource_type: "auto",
     });
+
     return result;
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    console.log(error);
+    throw new Error("Error uploading to cloudinary");
   }
 }
 
-module.exports = uploadFileToCloudinary;
+async function deleteMediaFromCloudinary(publicId) {
+  try {
+    await cloudinary.uploader.destroy(publicId);
+  } catch (error) {
+    console.log(error);
+    throw new Error("failed to delete assest from cloudinary");
+  }
+}
+
+module.exports = { uploadMediaToCloudinary, deleteMediaFromCloudinary };

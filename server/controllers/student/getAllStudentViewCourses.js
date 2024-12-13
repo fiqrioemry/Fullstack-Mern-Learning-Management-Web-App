@@ -1,5 +1,4 @@
 const Course = require("../../models/Course");
-const StudentCourses = require("../../models/StudentCourses");
 
 module.exports = async function getAllStudentViewCourses(req, res) {
   try {

@@ -33,6 +33,8 @@ mongoose
 
 // route configuration
 app.use("/api/auth", services.authRoute);
+app.use("/api/media", services.mediaRoute);
+app.use("/api/course", services.instructorRoute);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
