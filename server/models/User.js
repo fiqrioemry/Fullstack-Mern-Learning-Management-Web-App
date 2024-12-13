@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   userName: { type: String, required: true, unique: true },
   userEmail: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  role: { type: String, enum: ["user", "instructor"], default: "user" },
+  role: { type: String, enum: ["student", "instructor"], default: "student" },
   userProfile: [
     {
       firstName: String,
@@ -21,13 +21,8 @@ const UserSchema = new mongoose.Schema({
       gender: { type: String, enum: ["men", "women"] },
     },
   ],
-  subscriptions: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Subscription" },
-  ],
+
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = {
-  Users: mongoose.model("Users", UserSchema),
-  Subscriptions: mongoose.model("Subscription", SubscriptionSchema),
-};
+module.exports = mongoose.model("User", UserSchema);
