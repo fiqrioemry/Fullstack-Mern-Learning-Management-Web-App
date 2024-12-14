@@ -1,4 +1,4 @@
-module.exports = async function getStudentViewCourseDetails(req, res) {
+module.exports = async function getStudentViewCoursesDetails(req, res) {
   try {
     const { id } = req.params;
     const courseDetails = await Course.findById(id);

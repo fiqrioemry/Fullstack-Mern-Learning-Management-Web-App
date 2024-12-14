@@ -1,7 +1,7 @@
-const paypal = require("../../helpers/paypal");
+const paypal = require("../../utils/paypal");
 const Order = require("../../models/Order");
 
-module.exports = async function createOrde(req, res) {
+module.exports = async function createOrder(req, res) {
   try {
     const {
       userId,
@@ -93,7 +93,7 @@ module.exports = async function createOrde(req, res) {
         });
       }
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(500).send({
       success: false,
       message: "Internal server error",

@@ -1,4 +1,4 @@
-const createOrder = require("./createOder");
+const createOrder = require("./createOrder");
 const capturePaymentAndFinalizeOrder = require("./capturePaymentAndFinalizeOrder");
 
 module.exports = {

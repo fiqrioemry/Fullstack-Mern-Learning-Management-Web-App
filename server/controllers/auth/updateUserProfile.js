@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-const { User } = require("../../models/User");
+const User = require("../../models/User");
 dotenv.config();
 
 module.exports = async function updateUserProfile(req, res) {

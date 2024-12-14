@@ -1,6 +1,6 @@
-const markCurrentLectureAsViewed = require("markCurrentLectureAsViewed,");
-const getCurrentCourseProgress = require("getCurrentCourseProgress,");
-const resetCurrentCourseProgress = require("resetCurrentCourseProgress,");
+const markCurrentLectureAsViewed = require("./markCurrentLectureAsViewed");
+const getCurrentCourseProgress = require("./getCurrentCourseProgress");
+const resetCurrentCourseProgress = require("./resetCurrentCourseProgress");
 
 module.exports = {
   markCurrentLectureAsViewed,

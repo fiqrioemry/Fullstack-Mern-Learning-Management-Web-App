@@ -1,17 +1,9 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../models/User");
+const User = require("../../models/User");
 
 module.exports = async function registerNewUSer(req, res) {
   try {
     const { userName, userEmail, password } = req.body;
-
-    // input validation
-    if (!userName || !userEmail || !password) {
-      return res.status(400).send({
-        success: false,
-        message: "All fields are required",
-      });
-    }
 
     // email and username validation
     const existingUser = await User.findOne({
