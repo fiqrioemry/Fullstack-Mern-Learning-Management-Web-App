@@ -1,44 +1,44 @@
-const cors = require("cors");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
-const cookies = require("cookie-parser");
+const authRoutes = require("./routes/auth-routes/index");
+const mediaRoutes = require("./routes/instructor-routes/media-routes");
+const instructorCourseRoutes = require("./routes/instructor-routes/course-routes");
+const studentViewCourseRoutes = require("./routes/student-routes/course-routes");
+const studentViewOrderRoutes = require("./routes/student-routes/order-routes");
+const studentCoursesRoutes = require("./routes/student-routes/student-courses-routes");
+const studentCourseProgressRoutes = require("./routes/student-routes/course-progress-routes");
+
 const app = express();
-const services = require("./routes");
-dotenv.config();
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
 
-// env configuration
-const PORT = process.env.PORT;
-const MONGODB_URI = process.env.MONGODB_URI;
-const CLIENT_URL = process.env.CLIENT_URL;
-
-// support configuration
-app.use(cookies()); // allow read a cookie such refreshtoken
-app.use(express.json()); // allow parsing request body as JSON
 app.use(
   cors({
-    origin: CLIENT_URL, // restrict only for specified path
-    credentials: true, // allow to send credential
-    methods: ["POST", "PUT", "GET", "DELETE"], // allow only this method
-    allowedHeaders: ["Content-Type", "Authorization"], //allow content such bearer on headers
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "DELETE", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// db configuration
+app.use(express.json());
+
+//database connection
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGO_URI)
   .then(() => console.log("mongodb is connected"))
   .catch((e) => console.log(e));
 
-// route configuration
-app.use("/api/auth", services.authRoute);
-app.use("/api/order", services.orderRoute);
-app.use("/api/media", services.mediaRoute);
-app.use("/api/student", services.studentRoute);
-app.use("/api/course", services.instructorRoute);
-app.use("/api/progress", services.progressRoute);
+//routes configuration
+app.use("/auth", authRoutes);
+app.use("/media", mediaRoutes);
+app.use("/instructor/course", instructorCourseRoutes);
+app.use("/student/course", studentViewCourseRoutes);
+app.use("/student/order", studentViewOrderRoutes);
+app.use("/student/courses-bought", studentCoursesRoutes);
+app.use("/student/course-progress", studentCourseProgressRoutes);
 
-// error check
 app.use((err, req, res, next) => {
   console.log(err.stack);
   res.status(500).json({
@@ -47,7 +47,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// port check
 app.listen(PORT, () => {
-  console.log(`server is running on port ${PORT}`);
+  console.log(`Server is now running on port ${PORT}`);
 });
