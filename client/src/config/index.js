@@ -1,34 +1,15 @@
-//signin input data
-export const SignInFormInput = [
-  {
-    name: "userEmail",
-    label: "Email",
-    placeholder: "Enter your email",
-    type: "email",
-    componentType: "input",
-  },
-  {
-    name: "password",
-    label: "Password",
-    placeholder: "Enter your password",
-    type: "password",
-    componentType: "input",
-  },
-];
-
-//signup input data
-export const signUpFormInput = [
+export const signUpFormControls = [
   {
     name: "userName",
-    label: "Username",
-    placeholder: "Enter your username",
+    label: "User Name",
+    placeholder: "Enter your user name",
     type: "text",
     componentType: "input",
   },
   {
     name: "userEmail",
-    label: "Email",
-    placeholder: "Enter your email",
+    label: "User Email",
+    placeholder: "Enter your user email",
     type: "email",
     componentType: "input",
   },
@@ -41,25 +22,46 @@ export const signUpFormInput = [
   },
 ];
 
-// signup form data
+export const signInFormControls = [
+  {
+    name: "userEmail",
+    label: "User Email",
+    placeholder: "Enter your user email",
+    type: "email",
+    componentType: "input",
+  },
+  {
+    name: "password",
+    label: "Password",
+    placeholder: "Enter your password",
+    type: "password",
+    componentType: "input",
+  },
+];
+
+export const initialSignInFormData = {
+  userEmail: "",
+  password: "",
+};
+
 export const initialSignUpFormData = {
   userName: "",
   userEmail: "",
   password: "",
 };
 
-// signin form data
-export const initialSignInFormData = {
-  userEmail: "",
-  password: "",
-};
-
-// auth notification process
-export const initialAuthNotification = {
-  loading: false,
-  message: "",
-  status: null,
-};
+export const languageOptions = [
+  { id: "english", label: "English" },
+  { id: "spanish", label: "Spanish" },
+  { id: "french", label: "French" },
+  { id: "german", label: "German" },
+  { id: "chinese", label: "Chinese" },
+  { id: "japanese", label: "Japanese" },
+  { id: "korean", label: "Korean" },
+  { id: "portuguese", label: "Portuguese" },
+  { id: "arabic", label: "Arabic" },
+  { id: "russian", label: "Russian" },
+];
 
 export const courseLevelOptions = [
   { id: "beginner", label: "Beginner" },
@@ -78,19 +80,6 @@ export const courseCategories = [
   { id: "mobile-development", label: "Mobile Development" },
   { id: "game-development", label: "Game Development" },
   { id: "software-engineering", label: "Software Engineering" },
-];
-
-export const languageOptions = [
-  { id: "english", label: "English" },
-  { id: "spanish", label: "Spanish" },
-  { id: "french", label: "French" },
-  { id: "german", label: "German" },
-  { id: "chinese", label: "Chinese" },
-  { id: "japanese", label: "Japanese" },
-  { id: "korean", label: "Korean" },
-  { id: "portuguese", label: "Portuguese" },
-  { id: "arabic", label: "Arabic" },
-  { id: "russian", label: "Russian" },
 ];
 
 export const courseLandingPageFormControls = [
